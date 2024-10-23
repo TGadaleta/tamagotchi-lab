@@ -25,6 +25,13 @@ const resetBtnEl = document.getElementById('restart')
 /*-------------------------------- Functions --------------------------------*/
 init()
 function init() {
+    for (let key in state) {
+        state[key] = 0
+    }
+    gameOver = false
+    console.log(state)
+    gameMessageEl.setAttribute('class', 'hidden')
+    resetBtnEl.setAttribute('class', 'hidden')
     timer = setInterval(runGame, 2000)
 }
 function runGame() {
@@ -69,3 +76,4 @@ function sleepBtnClick() {
 playBtnEl.addEventListener('click', playBtnClick)
 feedBtnEl.addEventListener('click', feedBtnClick)
 sleepBtnEl.addEventListener('click', sleepBtnClick)
+resetBtnEl.addEventListener('click', init)
