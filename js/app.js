@@ -4,12 +4,12 @@
 
 /*---------------------------- Variables (state) ----------------------------*/
 let state = {
-    bordem : 0,
+    boredom : 0,
     hunger : 0,
     sleepiness : 0,
 }
 let timer
-let gameOver
+let gameOver = false
 
 /*------------------------ Cached Element References ------------------------*/
 const boredomStatEl = document.getElementById('boredom-stat')
@@ -24,7 +24,6 @@ const resetBtnEl = document.getElementById('restart')
 
 /*-------------------------------- Functions --------------------------------*/
 init()
-gameOver = false
 function init() {
     timer = setInterval(runGame, 2000)
 }
@@ -35,9 +34,11 @@ function runGame() {
 }
 function render() {
     if (gameOver){
-        timer.clearInterval()
+        clearInterval(timer)
+        gameMessageEl.classList.remove('hidden')
+        resetBtnEl.classList.remove('hidden')
     }
-    boredomStatEl.textContent = state.bordem
+    boredomStatEl.textContent = state.boredom
     hungerStatEl.textContent = state.hunger
     sleepinessStatEl.textContent = state.sleepiness
 }
@@ -47,11 +48,24 @@ function updateStates() {
     }
 }
 function checkGameOver() {
-    if (state.bordem > 10 || state.hunger > 10 || state.sleepiness > 10){
+    if (state.boredom >= 10 || state.hunger >= 10 || state.sleepiness >= 10){
         gameOver = true
     }
 }
-
+function playBtnClick() {
+    state.boredom = 0
+    render()
+}
+function feedBtnClick() {
+    state.hunger = 0
+    render()
+}
+function sleepBtnClick() {
+    state.sleepiness = 0
+    render()
+}
 /*----------------------------- Event Listeners -----------------------------*/
 
-
+playBtnEl.addEventListener('click', playBtnClick)
+feedBtnEl.addEventListener('click', feedBtnClick)
+sleepBtnEl.addEventListener('click', sleepBtnClick)
